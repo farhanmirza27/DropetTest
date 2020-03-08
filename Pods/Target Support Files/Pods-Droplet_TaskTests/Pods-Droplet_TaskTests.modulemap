@@ -1,0 +1,6 @@
+framework module Pods_Droplet_TaskTests {
+  umbrella header "Pods-Droplet_TaskTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
