@@ -8,47 +8,46 @@
 
 import Foundation
 
-
+// handles communication b/w view and interactor
 class ProfilePresenter : ViewToPresenterProfileProtocol  {
- 
-   weak var view: PresenterToViewProfileProtocol?
     
+    weak var view: PresenterToViewProfileProtocol?
     var interactor: PresenterToInteractorProfileProtocol?
-    
     var router: PresenterToRouterProfileProtocol?
     
+    // view did load
     func viewDidLoad() {
         interactor?.getProfileData()
     }
-    
+    // update profile
     func updateProfile(profile: Profile) {
         interactor?.updateProfile(profile: profile)
-     }
-     
-     func logout() {
+    }
+    // logout
+    func logout() {
         interactor?.logout()
-     }
-     
-}
-
-extension ProfilePresenter : InteractorToPresenterProfileProtocol {
-  
-    func updateSucess() {
-    view?.updateSucess()
     }
     
+}
+// interactor to presenter
+extension ProfilePresenter : InteractorToPresenterProfileProtocol {
+    // update sucess
+    func updateSucess() {
+        view?.updateSucess()
+    }
+    // data fetch sucess
     func success(profile: Profile) {
         view?.displayProfile(profile: profile)
     }
-    
+    // handle fail
     func fail(error: String) {
         view?.error(error : error)
     }
-    
+    // logout
     func logoutSucess() {
         router?.logout()
-      }
-      
+    }
+    
 }
- 
+
 

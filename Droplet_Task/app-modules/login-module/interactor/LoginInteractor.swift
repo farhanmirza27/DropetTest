@@ -8,33 +8,41 @@
 
 import Foundation
 
+// LoginInteractor to handle backend request handling
 class LoginInteractor : PresenterToInteractorLoginProtocol {
- 
+    
     var presenter: InteractorToPresenterLoginProtocol?
-    var firebaseManager: FirebaseManager?
-
+    var firebaseClient: FirebaseClientProtocol?
+    
+    // check existing user session
     func checkUserLoggedIn() {
-        firebaseManager?.checkLoggedInUser(responseHandler: { result in
+        firebaseClient?.checkLoggedInUser(responseHandler: { result in
             if result {
                 self.presenter?.loginSuccess()
             }
         })
-     }
+    }
+    // verify phone numnber
     func verifyNumber(number: String) {
-        firebaseManager?.verifyPhoneNumber(number: number, responseHandler: { verificationID in
+        firebaseClient?.verifyPhoneNumber(number: number, responseHandler: { verificationID in
+            // save verification id
             UserDefaults.standard.set(verificationID, forKey: "verficationID")
+            // sucess
             self.presenter?.phoneVerifcationSucess()
         }, { error in
+            // failure
             self.presenter?.fail(error: error.localizedDescription)
         })
         
     }
-    
+    // perform login with code
     func login(code: String) {
         if let verificationID = UserDefaults.standard.value(forKey: "verficationID") {
-            firebaseManager?.signIn(verificationID: "\(verificationID)", code: code, responseHandler: { result in
+            firebaseClient?.signIn(verificationID: "\(verificationID)", code: code, responseHandler: { result in
+                // sucess
                 self.presenter?.loginSuccess()
             }, { error in
+                // failure
                 self.presenter?.fail(error: error.localizedDescription)
             })
         }

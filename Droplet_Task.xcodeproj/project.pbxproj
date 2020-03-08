@@ -11,18 +11,25 @@
 		A9682B7E2412B42600258392 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9682B7D2412B42600258392 /* LoginViewController.swift */; };
 		A9682B832412B42A00258392 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9682B822412B42A00258392 /* Assets.xcassets */; };
 		A9682B862412B42A00258392 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9682B842412B42A00258392 /* LaunchScreen.storyboard */; };
-		A9682B912412B42B00258392 /* Droplet_TaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9682B902412B42B00258392 /* Droplet_TaskTests.swift */; };
-		A96896EA2412C3DC00EA969C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96896E92412C3DC00EA969C /* Extensions.swift */; };
+		A96896EA2412C3DC00EA969C /* UIView-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96896E92412C3DC00EA969C /* UIView-Extensions.swift */; };
 		A96896EC2412C3EA00EA969C /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96896EB2412C3EA00EA969C /* Fonts.swift */; };
 		A96896EF2412C58300EA969C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96896EE2412C58300EA969C /* BaseViewController.swift */; };
 		A96896F82412DBCE00EA969C /* ProfileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96896F72412DBCE00EA969C /* ProfileInteractor.swift */; };
 		A96896FA2412DBE200EA969C /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96896F92412DBE200EA969C /* ProfilePresenter.swift */; };
 		A96896FC2412DBFF00EA969C /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96896FB2412DBFF00EA969C /* ProfileRouter.swift */; };
 		A96896FF2412DC2F00EA969C /* ProfileProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96896FE2412DC2F00EA969C /* ProfileProtocols.swift */; };
+		A9A4E4D0241578B3000499BE /* LoginPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A4E4CF241578B3000499BE /* LoginPresenterTests.swift */; };
+		A9A4E4D324158102000499BE /* LoginInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A4E4D224158102000499BE /* LoginInteractorTests.swift */; };
+		A9A4E4D62415851A000499BE /* MockedFirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A4E4D52415851A000499BE /* MockedFirebaseManager.swift */; };
+		A9A4E4DA24158F4B000499BE /* ProfileViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A4E4D924158F4B000499BE /* ProfileViewControllerTests.swift */; };
 		A9AC04A02412B73000A43418 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AC049F2412B73000A43418 /* ProfileViewController.swift */; };
-		A9AC04A22412BD9700A43418 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AC04A12412BD9700A43418 /* FirebaseManager.swift */; };
+		A9AC04A22412BD9700A43418 /* FirebaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AC04A12412BD9700A43418 /* FirebaseClient.swift */; };
 		A9AC04A42412BF5100A43418 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AC04A32412BF5100A43418 /* Profile.swift */; };
 		A9AC04A92412C13C00A43418 /* UIComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AC04A82412C13C00A43418 /* UIComponents.swift */; };
+		A9AE43972415988F00341135 /* UIColor-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AE43962415988F00341135 /* UIColor-Extensions.swift */; };
+		A9AE4399241598C800341135 /* UIViewController-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AE4398241598C800341135 /* UIViewController-Extension.swift */; };
+		A9AE439C2415992C00341135 /* ImageConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AE439B2415992C00341135 /* ImageConverter.swift */; };
+		A9AE439E2415997D00341135 /* UITextField-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AE439D2415997D00341135 /* UITextField-Extensions.swift */; };
 		A9C44E9C24140FE400387939 /* LoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C44E9B24140FE400387939 /* LoginViewControllerTests.swift */; };
 		A9E4ACAB2412E1D700A2B7DC /* LoginProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E4ACAA2412E1D700A2B7DC /* LoginProtocols.swift */; };
 		A9E4ACAD2412E2A200A2B7DC /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E4ACAC2412E2A200A2B7DC /* LoginInteractor.swift */; };
@@ -56,19 +63,26 @@
 		A9682B852412B42A00258392 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A9682B872412B42A00258392 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9682B8C2412B42B00258392 /* Droplet_TaskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Droplet_TaskTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A9682B902412B42B00258392 /* Droplet_TaskTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Droplet_TaskTests.swift; sourceTree = "<group>"; };
 		A9682B922412B42B00258392 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A96896E92412C3DC00EA969C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		A96896E92412C3DC00EA969C /* UIView-Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView-Extensions.swift"; sourceTree = "<group>"; };
 		A96896EB2412C3EA00EA969C /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		A96896EE2412C58300EA969C /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		A96896F72412DBCE00EA969C /* ProfileInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInteractor.swift; sourceTree = "<group>"; };
 		A96896F92412DBE200EA969C /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
 		A96896FB2412DBFF00EA969C /* ProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
 		A96896FE2412DC2F00EA969C /* ProfileProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileProtocols.swift; sourceTree = "<group>"; };
+		A9A4E4CF241578B3000499BE /* LoginPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenterTests.swift; sourceTree = "<group>"; };
+		A9A4E4D224158102000499BE /* LoginInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteractorTests.swift; sourceTree = "<group>"; };
+		A9A4E4D52415851A000499BE /* MockedFirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedFirebaseManager.swift; sourceTree = "<group>"; };
+		A9A4E4D924158F4B000499BE /* ProfileViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerTests.swift; sourceTree = "<group>"; };
 		A9AC049F2412B73000A43418 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		A9AC04A12412BD9700A43418 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		A9AC04A12412BD9700A43418 /* FirebaseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseClient.swift; sourceTree = "<group>"; };
 		A9AC04A32412BF5100A43418 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		A9AC04A82412C13C00A43418 /* UIComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIComponents.swift; sourceTree = "<group>"; };
+		A9AE43962415988F00341135 /* UIColor-Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor-Extensions.swift"; sourceTree = "<group>"; };
+		A9AE4398241598C800341135 /* UIViewController-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController-Extension.swift"; sourceTree = "<group>"; };
+		A9AE439B2415992C00341135 /* ImageConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageConverter.swift; sourceTree = "<group>"; };
+		A9AE439D2415997D00341135 /* UITextField-Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField-Extensions.swift"; sourceTree = "<group>"; };
 		A9C44E9B24140FE400387939 /* LoginViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerTests.swift; sourceTree = "<group>"; };
 		A9E4ACAA2412E1D700A2B7DC /* LoginProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProtocols.swift; sourceTree = "<group>"; };
 		A9E4ACAC2412E2A200A2B7DC /* LoginInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
@@ -143,7 +157,7 @@
 			children = (
 				A9682B9B2412B5FA00258392 /* app-settings */,
 				A9AC04A52412C12000A43418 /* helper */,
-				A9AC049D2412B6C100A43418 /* firebase-manager */,
+				A9AC049D2412B6C100A43418 /* firebase-client */,
 				A9682B9C2412B60400258392 /* app-modules */,
 				A9682B822412B42A00258392 /* Assets.xcassets */,
 				A9682B842412B42A00258392 /* LaunchScreen.storyboard */,
@@ -157,7 +171,8 @@
 			isa = PBXGroup;
 			children = (
 				A9C44E9A24140FAB00387939 /* login-module */,
-				A9682B902412B42B00258392 /* Droplet_TaskTests.swift */,
+				A9A4E4D824158F22000499BE /* profile-module */,
+				A9A4E4D4241584E2000499BE /* mocked-firebase */,
 				A9682B922412B42B00258392 /* Info.plist */,
 			);
 			path = Droplet_TaskTests;
@@ -258,12 +273,52 @@
 			path = protocols;
 			sourceTree = "<group>";
 		};
-		A9AC049D2412B6C100A43418 /* firebase-manager */ = {
+		A9A4E4CD24157895000499BE /* view */ = {
 			isa = PBXGroup;
 			children = (
-				A9AC04A12412BD9700A43418 /* FirebaseManager.swift */,
+				A9C44E9B24140FE400387939 /* LoginViewControllerTests.swift */,
 			);
-			path = "firebase-manager";
+			path = view;
+			sourceTree = "<group>";
+		};
+		A9A4E4CE2415789B000499BE /* presenter */ = {
+			isa = PBXGroup;
+			children = (
+				A9A4E4CF241578B3000499BE /* LoginPresenterTests.swift */,
+			);
+			path = presenter;
+			sourceTree = "<group>";
+		};
+		A9A4E4D1241580E5000499BE /* interactor */ = {
+			isa = PBXGroup;
+			children = (
+				A9A4E4D224158102000499BE /* LoginInteractorTests.swift */,
+			);
+			path = interactor;
+			sourceTree = "<group>";
+		};
+		A9A4E4D4241584E2000499BE /* mocked-firebase */ = {
+			isa = PBXGroup;
+			children = (
+				A9A4E4D52415851A000499BE /* MockedFirebaseManager.swift */,
+			);
+			path = "mocked-firebase";
+			sourceTree = "<group>";
+		};
+		A9A4E4D824158F22000499BE /* profile-module */ = {
+			isa = PBXGroup;
+			children = (
+				A9A4E4D924158F4B000499BE /* ProfileViewControllerTests.swift */,
+			);
+			path = "profile-module";
+			sourceTree = "<group>";
+		};
+		A9AC049D2412B6C100A43418 /* firebase-client */ = {
+			isa = PBXGroup;
+			children = (
+				A9AC04A12412BD9700A43418 /* FirebaseClient.swift */,
+			);
+			path = "firebase-client";
 			sourceTree = "<group>";
 		};
 		A9AC049E2412B6F400A43418 /* profile-module */ = {
@@ -282,6 +337,7 @@
 		A9AC04A52412C12000A43418 /* helper */ = {
 			isa = PBXGroup;
 			children = (
+				A9AE439A2415992000341135 /* custom */,
 				A96896E72412C3BD00EA969C /* fonts */,
 				A9AC04A72412C12B00A43418 /* ui-components */,
 				A9AC04A62412C12500A43418 /* extensions */,
@@ -292,7 +348,10 @@
 		A9AC04A62412C12500A43418 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
-				A96896E92412C3DC00EA969C /* Extensions.swift */,
+				A96896E92412C3DC00EA969C /* UIView-Extensions.swift */,
+				A9AE43962415988F00341135 /* UIColor-Extensions.swift */,
+				A9AE4398241598C800341135 /* UIViewController-Extension.swift */,
+				A9AE439D2415997D00341135 /* UITextField-Extensions.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -305,10 +364,20 @@
 			path = "ui-components";
 			sourceTree = "<group>";
 		};
+		A9AE439A2415992000341135 /* custom */ = {
+			isa = PBXGroup;
+			children = (
+				A9AE439B2415992C00341135 /* ImageConverter.swift */,
+			);
+			path = custom;
+			sourceTree = "<group>";
+		};
 		A9C44E9A24140FAB00387939 /* login-module */ = {
 			isa = PBXGroup;
 			children = (
-				A9C44E9B24140FE400387939 /* LoginViewControllerTests.swift */,
+				A9A4E4D1241580E5000499BE /* interactor */,
+				A9A4E4CE2415789B000499BE /* presenter */,
+				A9A4E4CD24157895000499BE /* view */,
 			);
 			path = "login-module";
 			sourceTree = "<group>";
@@ -529,10 +598,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9E4ACAF2412E2DF00A2B7DC /* LoginPresenter.swift in Sources */,
+				A9AE4399241598C800341135 /* UIViewController-Extension.swift in Sources */,
+				A9AE439E2415997D00341135 /* UITextField-Extensions.swift in Sources */,
 				A96896FC2412DBFF00EA969C /* ProfileRouter.swift in Sources */,
 				A96896FA2412DBE200EA969C /* ProfilePresenter.swift in Sources */,
 				A96896EC2412C3EA00EA969C /* Fonts.swift in Sources */,
-				A9AC04A22412BD9700A43418 /* FirebaseManager.swift in Sources */,
+				A9AC04A22412BD9700A43418 /* FirebaseClient.swift in Sources */,
+				A9AE439C2415992C00341135 /* ImageConverter.swift in Sources */,
 				A96896FF2412DC2F00EA969C /* ProfileProtocols.swift in Sources */,
 				A9E4ACB12412E3B200A2B7DC /* LoginRouter.swift in Sources */,
 				A96896F82412DBCE00EA969C /* ProfileInteractor.swift in Sources */,
@@ -541,10 +613,11 @@
 				A9682B7E2412B42600258392 /* LoginViewController.swift in Sources */,
 				A9E4ACAB2412E1D700A2B7DC /* LoginProtocols.swift in Sources */,
 				A9E4ACAD2412E2A200A2B7DC /* LoginInteractor.swift in Sources */,
+				A9AE43972415988F00341135 /* UIColor-Extensions.swift in Sources */,
 				A96896EF2412C58300EA969C /* BaseViewController.swift in Sources */,
 				A9682B7A2412B42600258392 /* AppDelegate.swift in Sources */,
 				A9AC04A92412C13C00A43418 /* UIComponents.swift in Sources */,
-				A96896EA2412C3DC00EA969C /* Extensions.swift in Sources */,
+				A96896EA2412C3DC00EA969C /* UIView-Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,8 +625,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9A4E4D62415851A000499BE /* MockedFirebaseManager.swift in Sources */,
+				A9A4E4DA24158F4B000499BE /* ProfileViewControllerTests.swift in Sources */,
+				A9A4E4D324158102000499BE /* LoginInteractorTests.swift in Sources */,
 				A9C44E9C24140FE400387939 /* LoginViewControllerTests.swift in Sources */,
-				A9682B912412B42B00258392 /* Droplet_TaskTests.swift in Sources */,
+				A9A4E4D0241578B3000499BE /* LoginPresenterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

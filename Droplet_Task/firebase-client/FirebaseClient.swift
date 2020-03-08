@@ -1,5 +1,5 @@
 //
-//  FirebaseManager.swift
+//  FirebaseClient.swift
 //  Droplet_Task
 //
 //  Created by Farhan Mirza on 06/03/2020.
@@ -12,12 +12,11 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 
-
 typealias ResponseHandler<T> = (T) -> Void
 typealias ErrorHandler = (Error) -> Void
 
-
-protocol FirebaseManagerProtocol {
+// Firebase client protocols
+protocol FirebaseClientProtocol : class {
     func checkLoggedInUser(responseHandler: @escaping ResponseHandler<Bool>)
     func signIn(verificationID : String, code : String, responseHandler:@escaping ResponseHandler<String>,_ errorHandler:@escaping ErrorHandler)
     func verifyPhoneNumber(number: String, responseHandler:@escaping ResponseHandler<String>,_ errorHandler:@escaping ErrorHandler)
@@ -27,13 +26,10 @@ protocol FirebaseManagerProtocol {
     func logout(responseHandler:@escaping ResponseHandler<Bool>)
 }
 
-
-// FirebaseManager hanldes all firebase requests
-class FirebaseManager : FirebaseManagerProtocol {
-    
+// FirebaseClient handles all firebase requests
+class FirebaseClient : FirebaseClientProtocol {
     let db = Firestore.firestore()
     // sign in with phone
-    
     func checkLoggedInUser(responseHandler: @escaping ResponseHandler<Bool>) {
         if let _ = Auth.auth().currentUser {
             responseHandler(true)
@@ -42,7 +38,7 @@ class FirebaseManager : FirebaseManagerProtocol {
             responseHandler(false)
         }
     }
-    
+    // verify phone number
     func verifyPhoneNumber(number: String, responseHandler: @escaping ResponseHandler<String>, _ errorHandler: @escaping ErrorHandler) {
         PhoneAuthProvider.provider().verifyPhoneNumber("+44" + number, uiDelegate: nil) { (verificationID, error) in
             if let error = error {
@@ -53,13 +49,11 @@ class FirebaseManager : FirebaseManagerProtocol {
             }
         }
     }
-    
-    // verify code for sign-in via phone number
+    // sign in with code
     func signIn(verificationID: String, code : String ,responseHandler: @escaping ResponseHandler<String>, _ errorHandler: @escaping ErrorHandler) {
         let credential = PhoneAuthProvider.provider().credential(
             withVerificationID: verificationID,
             verificationCode: code)
-        
         Auth.auth().signIn(with: credential) { (authResult, error) in
             if let error = error {
                 errorHandler(error)
@@ -72,11 +66,9 @@ class FirebaseManager : FirebaseManagerProtocol {
                     self.saveProfileInfo(uid: (authResult?.user.uid)!)
                     responseHandler((authResult?.user.uid)!)
                 }
-                
             }
         }
     }
-    
     // save user profile information
     func saveProfileInfo(uid : String) {
         let user = Profile(firstName: "", lastName: "", phone: "", email: "", location: "", profilePicture: "")
@@ -112,7 +104,7 @@ class FirebaseManager : FirebaseManagerProtocol {
         }
     }
     
-    
+     // update user profile
     func updateProfile(profile: Profile, responseHandler: @escaping ResponseHandler<Bool>, _ errorHandler: @escaping ErrorHandler) {
         
         if let currentUser = Auth.auth().currentUser {
@@ -136,7 +128,7 @@ class FirebaseManager : FirebaseManagerProtocol {
             try Auth.auth().signOut()
             responseHandler(true)
         } catch {
-           //
+           responseHandler(false)
         }
     }
     
@@ -147,7 +139,6 @@ class FirebaseManager : FirebaseManagerProtocol {
 enum DataError : Error {
     case NoRecord
 }
-
 extension DataError: LocalizedError {
     public var errorDescription: String? {
         return "No record exist."

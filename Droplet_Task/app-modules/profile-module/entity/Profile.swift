@@ -6,9 +6,6 @@
 //  Copyright © 2020 Farhan Mirza. All rights reserved.
 //
 
-import Foundation
-
-
 struct Profile : Codable {
     var firstName : String
     var lastName  : String

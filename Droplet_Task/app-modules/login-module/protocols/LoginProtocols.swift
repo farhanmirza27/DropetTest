@@ -9,7 +9,9 @@
 
 import UIKit
 
+// login module business logic
 
+// view to presenter protocols
 protocol ViewToPresenterLoginProtocol : class {
     var view : PresenterToViewLoginProtocol? {get set}
     var interactor : PresenterToInteractorLoginProtocol? {get set}
@@ -20,26 +22,26 @@ protocol ViewToPresenterLoginProtocol : class {
     func login(code : String)
     func showProfile(from : UIViewController)
 }
-
+// presenter to view protocols
 protocol PresenterToViewLoginProtocol : class {
     func phoneNumberVerificationSucess()
     func loginSucess()
     func error(error : String)
 }
-
+// presenter to router protocols
 protocol PresenterToRouterLoginProtocol : class {
     static func createModule() -> LoginViewController
     func showProfile(from : UIViewController)
 }
-
+// presenter to interactor protocols
 protocol PresenterToInteractorLoginProtocol : class {
     var presenter : InteractorToPresenterLoginProtocol? {get set}
-    var firebaseManager : FirebaseManager? {get set}
+    var firebaseClient : FirebaseClientProtocol? {get set}
     func checkUserLoggedIn()
     func verifyNumber(number : String)
     func login(code : String)
 }
-
+// interactor to presenter
 protocol InteractorToPresenterLoginProtocol : class {
     func phoneVerifcationSucess()
     func loginSuccess()

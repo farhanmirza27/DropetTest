@@ -8,6 +8,9 @@
 
 import UIKit
 
+// profile module business logic
+
+// view to presenter
 protocol ViewToPresenterProfileProtocol : class {
     var view : PresenterToViewProfileProtocol? {get set}
     var interactor : PresenterToInteractorProfileProtocol? {get set}
@@ -17,27 +20,27 @@ protocol ViewToPresenterProfileProtocol : class {
     func updateProfile(profile : Profile)
     func logout()
 }
-
+// presenter to view
 protocol PresenterToViewProfileProtocol : class {
     func displayProfile(profile : Profile)
     func updateSucess()
     func error(error : String)
 }
-
+// presenter to router
 protocol PresenterToRouterProfileProtocol : class {
     var navigationController : UINavigationController? {get set}
     static func createModule(navigationController : UINavigationController) -> ProfileViewController
     func logout()
 }
-
+// presenter to intereactor
 protocol PresenterToInteractorProfileProtocol : class {
     var presenter : InteractorToPresenterProfileProtocol? {get set}
-    var firebaseManager : FirebaseManager? {get set}
+    var firebaseClient : FirebaseClient? {get set}
     func getProfileData()
     func updateProfile(profile : Profile)
     func logout()
 }
-
+// interactor to presenter
 protocol InteractorToPresenterProfileProtocol : class {
     func success(profile : Profile)
     func fail(error : String)

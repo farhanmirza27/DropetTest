@@ -9,7 +9,7 @@
 import UIKit
 
 private let reuseIdentifier = "profileCellId"
-
+// rows
 enum ProfileRows  {
     case Picture
     case FirstName
@@ -20,10 +20,10 @@ enum ProfileRows  {
     case Save
 }
 
-
+// handles profile view
 class ProfileViewController : BaseViewController {
     var  presenter : ViewToPresenterProfileProtocol?
-    
+    // sub-views
     let tableView = UIComponents.shared.tableView()
     let profilePictureView = UIComponents.shared.imageView(name: "defaul")
     let firstNameTF = UIComponents.shared.textField(placeHolder: "First Name")
@@ -32,8 +32,7 @@ class ProfileViewController : BaseViewController {
     let emailTF = UIComponents.shared.textField(placeHolder: "Email")
     let locationTF = UIComponents.shared.textField(placeHolder: "Location")
     let saveBtn = UIComponents.shared.button(text: "Save")
-    
-    let profile = Profile(firstName: "Farhan", lastName: "Mirza", phone: "7367339991", email: "farhan@farhanmirza.me", location: "cb42qf", profilePicture: "")
+    // rows
     let profileRows : [ProfileRows] = [.Picture,.FirstName,.LastName,.Phone,.Email,.Location,.Save]
     
     override func viewDidLoad() {
@@ -42,8 +41,9 @@ class ProfileViewController : BaseViewController {
         showSpinner()
         presenter?.viewDidLoad()
     }
-    
+    // setup sub-views
     func setupView() {
+        // configurations
         self.navigationItem.title = "Profile"
         view.backgroundColor = .white
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
@@ -58,11 +58,11 @@ class ProfileViewController : BaseViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logout))
         navigationItem.hidesBackButton = true
     }
-    
+    // logout
     @objc func logout() {
         presenter?.logout()
     }
-    
+    // populate data in text-fields
     func populateData(profile : Profile) {
         firstNameTF.text = profile.firstName
         lastNameTF.text  = profile.lastName
@@ -77,16 +77,14 @@ class ProfileViewController : BaseViewController {
     }
 }
 
-
+// tableview delegate and data-source
 extension ProfileViewController : UITableViewDelegate , UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return profileRows.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         
@@ -134,32 +132,32 @@ extension ProfileViewController : UITableViewDelegate , UITableViewDataSource {
         cell.selectionStyle = .none
         return cell
     }
-    
+    // validate data for text fields
     func validateData() -> Bool {
         let textfields = [firstNameTF,lastNameTF,phoneTF,emailTF,locationTF]
         for field in textfields {
             if let text = field.text {
                 if text.isEmpty {
-                   return false
+                    return false
                 }
             }
         }
         return true
     }
     
-    
-  @objc func didClickSave() {
-    
-    guard validateData() else {
-        self.alert(message: "Please provide all required fields")
-       return
+    // handle save button click
+    @objc func didClickSave() {
+        guard validateData() else {
+            self.alert(message: "Please provide all required fields")
+            return
+        }
+        let profile = Profile(firstName: firstNameTF.text!, lastName: lastNameTF.text!, phone: phoneTF.text!, email: emailTF.text!, location: locationTF.text!, profilePicture: ImageConverter().convertImageToBase64String(img: profilePictureView.image!))
+        showSpinner()
+        // update profile
+        presenter?.updateProfile(profile: profile)
     }
     
-    let profile = Profile(firstName: firstNameTF.text!, lastName: lastNameTF.text!, phone: phoneTF.text!, email: emailTF.text!, location: locationTF.text!, profilePicture: ImageConverter().convertImageToBase64String(img: profilePictureView.image!))
-    showSpinner()
-    presenter?.updateProfile(profile: profile)
-    }
-    
+    // change profile picture
     @objc func changeProfilePicture() {
         let vc = UIImagePickerController()
         vc.sourceType = .photoLibrary
@@ -167,22 +165,23 @@ extension ProfileViewController : UITableViewDelegate , UITableViewDataSource {
         vc.delegate = self
         present(vc, animated: true)
     }
-    
 }
 
+// presenter to view
 extension ProfileViewController :  PresenterToViewProfileProtocol {
+    // handle update sucess
     func updateSucess() {
         removeSpinner()
         self.showToast(message: "Profile Updated")
     }
-    
+    // display profile
     func displayProfile(profile: Profile) {
         DispatchQueue.main.async { [weak self] in
             self?.populateData(profile: profile)
             self?.removeSpinner()
         }
     }
-    
+    // handle error
     func error(error : String) {
         DispatchQueue.main.async { [weak self] in
             self?.removeSpinner()
@@ -191,12 +190,10 @@ extension ProfileViewController :  PresenterToViewProfileProtocol {
     }
 }
 
-
-
+// image picker delegate
 extension ProfileViewController  : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true)
-       
         guard let image = info[.editedImage] as? UIImage else {
             return
         }

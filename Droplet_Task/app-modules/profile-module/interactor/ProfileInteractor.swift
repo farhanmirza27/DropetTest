@@ -8,31 +8,30 @@
 
 import Foundation
 
+// ProfileInteractor to handle backend request handling
 class ProfileInteractor : PresenterToInteractorProfileProtocol {
- 
-    var firebaseManager: FirebaseManager?
-    
+    var firebaseClient : FirebaseClient?
     var presenter: InteractorToPresenterProfileProtocol?
     
+    // get logged in user profile data
     func getProfileData() {
-      
-        firebaseManager?.retriveUserInfo(responseHandler: { profile in
+        firebaseClient?.retriveUserInfo(responseHandler: { profile in
             self.presenter?.success(profile: profile)
         }, { error in
             self.presenter?.fail(error: error.localizedDescription)
         })
     }
-    
+    // update profile
     func updateProfile(profile : Profile) {
-        firebaseManager?.updateProfile(profile: profile, responseHandler: { _ in
+        firebaseClient?.updateProfile(profile: profile, responseHandler: { _ in
             self.presenter?.updateSucess()
         }, { error in
             self.presenter?.fail(error: error.localizedDescription)
         })
      }
-     
+     // handle logout
      func logout() {
-        firebaseManager?.logout(responseHandler: { sucess in
+        firebaseClient?.logout(responseHandler: { sucess in
             if sucess {
                 self.presenter?.logoutSucess()
             }

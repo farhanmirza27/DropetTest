@@ -6,13 +6,10 @@
 //  Copyright © 2020 Farhan Mirza. All rights reserved.
 //
 
-import Foundation
-
 
 import UIKit
 
 // BaseViewController to handle to handle common functions and to handle save-area
-
 class BaseViewController: UIViewController {
     // save area
     var saveAreaView:UIView = {
@@ -45,7 +42,6 @@ class BaseViewController: UIViewController {
             ])
         }
     }
-    
     // load view
     override func loadView() {
         super.loadView()
@@ -53,7 +49,6 @@ class BaseViewController: UIViewController {
         hideKeyboardWhenTappedAround()
         setupView()
     }
-    
     // show spinner
     func showSpinner() {
         let spinnerView = UIView.init(frame: self.view.bounds)
@@ -61,15 +56,12 @@ class BaseViewController: UIViewController {
         let ai =  UIActivityIndicatorView(style: .gray)
         ai.startAnimating()
         ai.center = spinnerView.center
-        
         DispatchQueue.main.async {  [weak self] in
             spinnerView.addSubview(ai)
             self?.view.addSubview(spinnerView)
         }
-        
         vSpinner = spinnerView
     }
-    
     // remove spinner
     func removeSpinner() {
         DispatchQueue.main.async {
@@ -77,11 +69,10 @@ class BaseViewController: UIViewController {
             self.vSpinner = nil
         }
     }
-    
     deinit {
-        print("\(type(of: self)) deinit")
+        print("\(type(of: self)) deinit") // retain cycle check
     }
-
+    
 }
 
 

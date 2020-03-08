@@ -8,12 +8,11 @@
 
 import UIKit
 
-
+// handles routing for profile module
 class ProfileRouter : PresenterToRouterProfileProtocol {
     var navigationController: UINavigationController?
-
+    // create module
     static func createModule(navigationController : UINavigationController) -> ProfileViewController {
-        
         let view = ProfileViewController()
         let presenter : ViewToPresenterProfileProtocol & InteractorToPresenterProfileProtocol = ProfilePresenter()
         let interactor : PresenterToInteractorProfileProtocol = ProfileInteractor()
@@ -24,13 +23,11 @@ class ProfileRouter : PresenterToRouterProfileProtocol {
         presenter.view = view
         presenter.router = router
         interactor.presenter = presenter
-        interactor.firebaseManager = FirebaseManager()
+        interactor.firebaseClient = FirebaseClient()
         router.navigationController = navigationController
-      
-
         return view
     }
-    
+    // logout navigation
     func logout() {
         navigationController?.popViewController(animated: true)
     }

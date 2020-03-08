@@ -8,25 +8,24 @@
 
 import UIKit
 
-
+// login module routing handler
 class LoginRouter : PresenterToRouterLoginProtocol {
-        
+    // create module with intialization
     static func createModule() -> LoginViewController {
         let view = LoginViewController()
         let presenter : ViewToPresenterLoginProtocol & InteractorToPresenterLoginProtocol = LoginPresenter()
         let interactor : PresenterToInteractorLoginProtocol = LoginInteractor()
         let router : PresenterToRouterLoginProtocol = LoginRouter()
-                
+        
         view.presenter = presenter
         presenter.view = view
         presenter.interactor = interactor
         presenter.router = router
         interactor.presenter = presenter
-        interactor.firebaseManager = FirebaseManager()
-        
+        interactor.firebaseClient = FirebaseClient()
         return view
     }
-    
+    // show profile screen
     func showProfile(from : UIViewController) {
         let profileModule = ProfileRouter.createModule(navigationController: from.navigationController!)
         from.navigationController?.pushViewController(profileModule, animated: true)

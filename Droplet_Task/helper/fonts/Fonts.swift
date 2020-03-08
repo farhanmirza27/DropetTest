@@ -6,9 +6,6 @@
 //  Copyright © 2020 Farhan Mirza. All rights reserved.
 //
 
-import Foundation
-
-
 // app fonts
 struct FontName {
     static let Bold             = "AvenirNext-Bold"
