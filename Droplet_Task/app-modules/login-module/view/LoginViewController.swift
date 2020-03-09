@@ -140,6 +140,7 @@ extension LoginViewController : PresenterToViewLoginProtocol {
             self?.timer?.invalidate()
             self?.seconds = 60
             self?.timerLabel.text = ""
+            self?.proceedBtn.tag = 0
             self?.presenter?.showProfile(from: self!)
         }
     }
