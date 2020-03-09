@@ -14,7 +14,9 @@ class MockedFirebaseClient : FirebaseClientProtocol {
      var userLoggedIn = false
      var verifyNumberSucess = false
      var loginSucess = false
-     
+     var updateProfileSucess = false
+     var retriveProfileData = false
+     var logoutPeformed = false
      
      func checkLoggedInUser(responseHandler: @escaping ResponseHandler<Bool>) {
          userLoggedIn = true
@@ -33,15 +35,15 @@ class MockedFirebaseClient : FirebaseClientProtocol {
      }
      
      func updateProfile(profile: Profile, responseHandler: @escaping ResponseHandler<Bool>, _ errorHandler: @escaping ErrorHandler) {
-         
+         updateProfileSucess = true
      }
      
      func retriveUserInfo(responseHandler: @escaping ResponseHandler<Profile>, _ errorHandler: @escaping ErrorHandler) {
-         
+         retriveProfileData = true
      }
      
      func logout(responseHandler: @escaping ResponseHandler<Bool>) {
-         
+         logoutPeformed = true
      }
      
      

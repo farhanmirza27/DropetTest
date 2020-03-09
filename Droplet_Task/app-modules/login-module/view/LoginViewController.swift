@@ -13,6 +13,8 @@ class LoginViewController: BaseViewController {
     // presenter
     var presenter : ViewToPresenterLoginProtocol?
     // sub-views
+    let fieldsContainer = UIComponents.shared.container(bgColor: .clear)
+    let countryCodeTF = UIComponents.shared.textField(placeHolder: "", keyboardType: .numberPad)
     let phoneNumTF = UIComponents.shared.textField(placeHolder: "Phone Number", keyboardType: .numberPad)
     let codeTF = UIComponents.shared.textField(placeHolder: "Verification Code", keyboardType: .numberPad)
     let proceedBtn = UIComponents.shared.button(text: "Verify")
@@ -25,11 +27,19 @@ class LoginViewController: BaseViewController {
     // setup sub-views and configurations
     func setupView() {
         codeTF.isHidden = true
-        saveAreaView.addSubViews(views: phoneNumTF,codeTF,proceedBtn)
-        saveAreaView.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: phoneNumTF)
-        saveAreaView.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: codeTF)
+        countryCodeTF.text = "+44"
+        countryCodeTF.isEnabled = false
+        
+        fieldsContainer.addSubViews(views: countryCodeTF,phoneNumTF)
+        fieldsContainer.addConstraintsWithFormat("H:|-30-[v0(70)]-8-[v1]-30-|", views: countryCodeTF,phoneNumTF)
+        fieldsContainer.addConstraintsWithFormat("V:|[v0(40)]|", views: countryCodeTF)
+        fieldsContainer.addConstraintsWithFormat("V:|[v0(40)]|", views: phoneNumTF)
+        
+        saveAreaView.addSubViews(views: fieldsContainer,codeTF,proceedBtn)
+        saveAreaView.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: fieldsContainer)
+        saveAreaView.addConstraintsWithFormat("H:|-70-[v0]-70-|", views: codeTF)
         saveAreaView.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: proceedBtn)
-        saveAreaView.addConstraintsWithFormat("V:|-40-[v0(40)]-30-[v1(40)]-40-[v2(40)]", views: phoneNumTF,codeTF,proceedBtn)
+        saveAreaView.addConstraintsWithFormat("V:|-40-[v0(40)]-30-[v1(40)]-40-[v2(40)]", views: fieldsContainer,codeTF,proceedBtn)
         // add targets
         proceedBtn.addTarget(self, action: #selector(didClickLoginBtn), for: .touchUpInside)
     }
@@ -74,6 +84,10 @@ extension LoginViewController : PresenterToViewLoginProtocol {
     func loginSucess() {
         DispatchQueue.main.async { [weak self] in
             self?.removeSpinner()
+            // clear text fields
+            self?.phoneNumTF.text = nil
+            self?.codeTF.text = nil
+            self?.codeTF.isHidden = true
             self?.presenter?.showProfile(from: self!)
         }
     }

@@ -35,7 +35,7 @@ protocol PresenterToRouterProfileProtocol : class {
 // presenter to intereactor
 protocol PresenterToInteractorProfileProtocol : class {
     var presenter : InteractorToPresenterProfileProtocol? {get set}
-    var firebaseClient : FirebaseClient? {get set}
+    var firebaseClient : FirebaseClientProtocol? {get set}
     func getProfileData()
     func updateProfile(profile : Profile)
     func logout()

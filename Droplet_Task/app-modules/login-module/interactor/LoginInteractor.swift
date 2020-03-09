@@ -40,6 +40,7 @@ class LoginInteractor : PresenterToInteractorLoginProtocol {
         if let verificationID = UserDefaults.standard.value(forKey: "verficationID") {
             firebaseClient?.signIn(verificationID: "\(verificationID)", code: code, responseHandler: { result in
                 // sucess
+                UserDefaults.standard.removeObject(forKey: "verficationID")
                 self.presenter?.loginSuccess()
             }, { error in
                 // failure

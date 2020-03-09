@@ -27,8 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupNavBar()
         
         let loginModule = LoginRouter.createModule()
-        window?.rootViewController =  UINavigationController(rootViewController: loginModule)  
-        
+        window?.rootViewController =  UINavigationController(rootViewController: loginModule)
         return true
     }
     

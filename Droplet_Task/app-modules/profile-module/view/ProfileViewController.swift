@@ -25,7 +25,7 @@ class ProfileViewController : BaseViewController {
     var  presenter : ViewToPresenterProfileProtocol?
     // sub-views
     let tableView = UIComponents.shared.tableView()
-    let profilePictureView = UIComponents.shared.imageView(name: "defaul")
+    let profilePictureView = UIComponents.shared.imageView(name: "default")
     let firstNameTF = UIComponents.shared.textField(placeHolder: "First Name")
     let lastNameTF = UIComponents.shared.textField(placeHolder: "Last Name")
     let phoneTF = UIComponents.shared.textField(placeHolder: "Phone", keyboardType: .numberPad)
@@ -133,22 +133,26 @@ extension ProfileViewController : UITableViewDelegate , UITableViewDataSource {
         return cell
     }
     // validate data for text fields
-    func validateData() -> Bool {
+    func validateData() -> (Bool,String) {
         let textfields = [firstNameTF,lastNameTF,phoneTF,emailTF,locationTF]
         for field in textfields {
             if let text = field.text {
                 if text.isEmpty {
-                    return false
+                    return (false,"Please provide all required fields")
                 }
             }
         }
-        return true
+        // email field extra check
+        if !emailTF.text!.isValidEmail() {
+            return (false,"Please provide valid email id")
+        }
+        return (true,"")
     }
     
     // handle save button click
     @objc func didClickSave() {
-        guard validateData() else {
-            self.alert(message: "Please provide all required fields")
+        guard validateData().0 else {
+            self.alert(message: validateData().1)
             return
         }
         let profile = Profile(firstName: firstNameTF.text!, lastName: lastNameTF.text!, phone: phoneTF.text!, email: emailTF.text!, location: locationTF.text!, profilePicture: ImageConverter().convertImageToBase64String(img: profilePictureView.image!))

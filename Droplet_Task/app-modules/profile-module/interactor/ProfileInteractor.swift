@@ -10,7 +10,8 @@ import Foundation
 
 // ProfileInteractor to handle backend request handling
 class ProfileInteractor : PresenterToInteractorProfileProtocol {
-    var firebaseClient : FirebaseClient?
+
+    var firebaseClient : FirebaseClientProtocol?
     var presenter: InteractorToPresenterProfileProtocol?
     
     // get logged in user profile data

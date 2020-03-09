@@ -36,6 +36,9 @@
 		A9E4ACAF2412E2DF00A2B7DC /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E4ACAE2412E2DF00A2B7DC /* LoginPresenter.swift */; };
 		A9E4ACB12412E3B200A2B7DC /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E4ACB02412E3B200A2B7DC /* LoginRouter.swift */; };
 		A9E4ACB72412F6FD00A2B7DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9E4ACB62412F6FD00A2B7DC /* GoogleService-Info.plist */; };
+		A9F106D6241628D80036AE70 /* String-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F106D5241628D80036AE70 /* String-Extensions.swift */; };
+		A9F106DA24162B670036AE70 /* ProfilePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F106D924162B670036AE70 /* ProfilePresenterTests.swift */; };
+		A9F106DD241630770036AE70 /* ProfileInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F106DC241630770036AE70 /* ProfileInteractorTests.swift */; };
 		BA175A332D60914CC8BA0BC1 /* Pods_Droplet_TaskTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46570F7126EC3505ECEC1624 /* Pods_Droplet_TaskTests.framework */; };
 		E875528CCE35D4377BA3167E /* Pods_Droplet_Task.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B24BDFF764C464F4B0A075B /* Pods_Droplet_Task.framework */; };
 /* End PBXBuildFile section */
@@ -89,6 +92,9 @@
 		A9E4ACAE2412E2DF00A2B7DC /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		A9E4ACB02412E3B200A2B7DC /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
 		A9E4ACB62412F6FD00A2B7DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A9F106D5241628D80036AE70 /* String-Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String-Extensions.swift"; sourceTree = "<group>"; };
+		A9F106D924162B670036AE70 /* ProfilePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenterTests.swift; sourceTree = "<group>"; };
+		A9F106DC241630770036AE70 /* ProfileInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInteractorTests.swift; sourceTree = "<group>"; };
 		D1867EFD8DDE5835458BB1FA /* Pods-Droplet_Task.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Droplet_Task.debug.xcconfig"; path = "Target Support Files/Pods-Droplet_Task/Pods-Droplet_Task.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -156,7 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				A9682B9B2412B5FA00258392 /* app-settings */,
-				A9AC04A52412C12000A43418 /* helper */,
+				A9AC04A52412C12000A43418 /* helpers */,
 				A9AC049D2412B6C100A43418 /* firebase-client */,
 				A9682B9C2412B60400258392 /* app-modules */,
 				A9682B822412B42A00258392 /* Assets.xcassets */,
@@ -308,7 +314,9 @@
 		A9A4E4D824158F22000499BE /* profile-module */ = {
 			isa = PBXGroup;
 			children = (
-				A9A4E4D924158F4B000499BE /* ProfileViewControllerTests.swift */,
+				A9F106DB2416305C0036AE70 /* interactor */,
+				A9F106D824162B510036AE70 /* presenter */,
+				A9F106D724162B490036AE70 /* view */,
 			);
 			path = "profile-module";
 			sourceTree = "<group>";
@@ -334,7 +342,7 @@
 			path = "profile-module";
 			sourceTree = "<group>";
 		};
-		A9AC04A52412C12000A43418 /* helper */ = {
+		A9AC04A52412C12000A43418 /* helpers */ = {
 			isa = PBXGroup;
 			children = (
 				A9AE439A2415992000341135 /* custom */,
@@ -342,7 +350,7 @@
 				A9AC04A72412C12B00A43418 /* ui-components */,
 				A9AC04A62412C12500A43418 /* extensions */,
 			);
-			path = helper;
+			path = helpers;
 			sourceTree = "<group>";
 		};
 		A9AC04A62412C12500A43418 /* extensions */ = {
@@ -352,6 +360,7 @@
 				A9AE43962415988F00341135 /* UIColor-Extensions.swift */,
 				A9AE4398241598C800341135 /* UIViewController-Extension.swift */,
 				A9AE439D2415997D00341135 /* UITextField-Extensions.swift */,
+				A9F106D5241628D80036AE70 /* String-Extensions.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -427,6 +436,30 @@
 				A9E4ACAA2412E1D700A2B7DC /* LoginProtocols.swift */,
 			);
 			path = protocols;
+			sourceTree = "<group>";
+		};
+		A9F106D724162B490036AE70 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				A9A4E4D924158F4B000499BE /* ProfileViewControllerTests.swift */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		A9F106D824162B510036AE70 /* presenter */ = {
+			isa = PBXGroup;
+			children = (
+				A9F106D924162B670036AE70 /* ProfilePresenterTests.swift */,
+			);
+			path = presenter;
+			sourceTree = "<group>";
+		};
+		A9F106DB2416305C0036AE70 /* interactor */ = {
+			isa = PBXGroup;
+			children = (
+				A9F106DC241630770036AE70 /* ProfileInteractorTests.swift */,
+			);
+			path = interactor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -611,6 +644,7 @@
 				A9AC04A42412BF5100A43418 /* Profile.swift in Sources */,
 				A9AC04A02412B73000A43418 /* ProfileViewController.swift in Sources */,
 				A9682B7E2412B42600258392 /* LoginViewController.swift in Sources */,
+				A9F106D6241628D80036AE70 /* String-Extensions.swift in Sources */,
 				A9E4ACAB2412E1D700A2B7DC /* LoginProtocols.swift in Sources */,
 				A9E4ACAD2412E2A200A2B7DC /* LoginInteractor.swift in Sources */,
 				A9AE43972415988F00341135 /* UIColor-Extensions.swift in Sources */,
@@ -625,6 +659,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9F106DD241630770036AE70 /* ProfileInteractorTests.swift in Sources */,
+				A9F106DA24162B670036AE70 /* ProfilePresenterTests.swift in Sources */,
 				A9A4E4D62415851A000499BE /* MockedFirebaseManager.swift in Sources */,
 				A9A4E4DA24158F4B000499BE /* ProfileViewControllerTests.swift in Sources */,
 				A9A4E4D324158102000499BE /* LoginInteractorTests.swift in Sources */,
