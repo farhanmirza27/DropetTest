@@ -18,6 +18,11 @@ class LoginViewController: BaseViewController {
     let phoneNumTF = UIComponents.shared.textField(placeHolder: "Phone Number", keyboardType: .numberPad)
     let codeTF = UIComponents.shared.textField(placeHolder: "Verification Code", keyboardType: .numberPad)
     let proceedBtn = UIComponents.shared.button(text: "Verify")
+    let resendContainer = UIComponents.shared.container(bgColor: .clear)
+    let resendBtn = UIComponents.shared.button(text: "Resend Code", backgroundColor: .clear, titleColor: .blue)
+    let timerLabel = UIComponents.shared.label(text: "", alignment: .left, color: .black)
+    var seconds = 60
+    var timer: Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,19 +34,27 @@ class LoginViewController: BaseViewController {
         codeTF.isHidden = true
         countryCodeTF.text = "+44"
         countryCodeTF.isEnabled = false
+        resendBtn.isHidden = true
         
         fieldsContainer.addSubViews(views: countryCodeTF,phoneNumTF)
         fieldsContainer.addConstraintsWithFormat("H:|-30-[v0(70)]-8-[v1]-30-|", views: countryCodeTF,phoneNumTF)
         fieldsContainer.addConstraintsWithFormat("V:|[v0(40)]|", views: countryCodeTF)
         fieldsContainer.addConstraintsWithFormat("V:|[v0(40)]|", views: phoneNumTF)
         
-        saveAreaView.addSubViews(views: fieldsContainer,codeTF,proceedBtn)
+        resendContainer.addSubViews(views: resendBtn,timerLabel)
+        resendContainer.addConstraintsWithFormat("H:|-16-[v0]-16-[v1]-16-|", views: resendBtn,timerLabel)
+        resendContainer.addConstraintsWithFormat("V:|[v0(35)]|", views: resendBtn,resendBtn)
+        resendContainer.addConstraintsWithFormat("V:|[v0]|", views: resendBtn,timerLabel)
+        
+        saveAreaView.addSubViews(views: fieldsContainer,codeTF,proceedBtn,resendContainer)
         saveAreaView.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: fieldsContainer)
         saveAreaView.addConstraintsWithFormat("H:|-70-[v0]-70-|", views: codeTF)
         saveAreaView.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: proceedBtn)
-        saveAreaView.addConstraintsWithFormat("V:|-40-[v0(40)]-30-[v1(40)]-40-[v2(40)]", views: fieldsContainer,codeTF,proceedBtn)
+        saveAreaView.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: resendContainer)
+        saveAreaView.addConstraintsWithFormat("V:|-40-[v0(40)]-30-[v1(40)]-40-[v2(30)]-16-[v3(40)]", views: fieldsContainer,codeTF,resendContainer,proceedBtn)
         // add targets
         proceedBtn.addTarget(self, action: #selector(didClickLoginBtn), for: .touchUpInside)
+        resendBtn.addTarget(self, action: #selector(resendCode), for: .touchUpInside)
     }
     
     // handle button click for phone verfication and login
@@ -52,7 +65,7 @@ class LoginViewController: BaseViewController {
             if let text = phoneNumTF.text {
                 if !text.isEmpty {
                     // verify phone number
-                    presenter?.verifyNumber(number: phoneNumTF.text!)
+                    presenter?.verifyNumber(number:  countryCodeTF.text! + text)
                 }
             }
         } else {
@@ -67,16 +80,46 @@ class LoginViewController: BaseViewController {
             }
         }
     }
+    // resend code
+    @objc func resendCode() {
+        // can be used last recieved verification id but if user change phone number then its better
+        if let text = phoneNumTF.text {
+            if !text.isEmpty {
+                presenter?.verifyNumber(number: text)
+            }
+            else {
+                self.alert(message: "please provide phone number")
+            }
+        }
+    }
+    
+    // timer for resending code button
+    func runTimer() {
+        resendBtn.isEnabled = false
+        resendBtn.setTitleColor(.gray, for: .normal)
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
+    }
+    // update seconds on screen
+    @objc func updateCounter() {
+        seconds  -= 1
+        if seconds == 0 {
+            resendBtn.isEnabled = true
+            resendBtn.setTitleColor(.blue, for: .normal)
+            timer?.invalidate()
+        }
+    }
 }
 // presenter to view protocols
 extension LoginViewController : PresenterToViewLoginProtocol {
     // phone verification handling
     func phoneNumberVerificationSucess() {
-        DispatchQueue.main.async {
-            self.removeSpinner()
-            self.codeTF.isHidden = false
-            self.proceedBtn.setTitle("Login", for: .normal)
-            self.proceedBtn.tag = 1
+        DispatchQueue.main.async { [weak self] in
+            self?.removeSpinner()
+            self?.codeTF.isHidden = false
+            self?.proceedBtn.setTitle("Login", for: .normal)
+            self?.proceedBtn.tag = 1
+            self?.resendBtn.isHidden = false
+            self?.runTimer()
         }
         
     }
@@ -88,6 +131,7 @@ extension LoginViewController : PresenterToViewLoginProtocol {
             self?.phoneNumTF.text = nil
             self?.codeTF.text = nil
             self?.codeTF.isHidden = true
+            self?.resendBtn.isHidden = true
             self?.presenter?.showProfile(from: self!)
         }
     }

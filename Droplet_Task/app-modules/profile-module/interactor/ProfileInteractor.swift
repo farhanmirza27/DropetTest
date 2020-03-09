@@ -24,6 +24,11 @@ class ProfileInteractor : PresenterToInteractorProfileProtocol {
     }
     // update profile
     func updateProfile(profile : Profile) {
+        // internet connectivity
+            guard NetworkManager.shared.connectedToNetwork() else {
+                presenter?.fail(error: "you are not connected to internet")
+                return
+            }
         firebaseClient?.updateProfile(profile: profile, responseHandler: { _ in
             self.presenter?.updateSucess()
         }, { error in

@@ -59,5 +59,15 @@ class UIComponents {
         textField.setRightPaddingPoints(20)
         return textField
     }
+    // MARK: UILabel
+       func label(text: String? = nil, alignment: NSTextAlignment = .left, color: UIColor = UIColor.black, fontName : String = FontName.Regular ,fontSize : CGFloat = 14) -> UILabel {
+           let label = UILabel()
+           label.text = text
+           label.textColor = color
+           label.textAlignment = alignment
+           label.numberOfLines = 0
+           label.font = UIFont(name: fontName, size: fontSize)
+           return label
+       }
 }
 

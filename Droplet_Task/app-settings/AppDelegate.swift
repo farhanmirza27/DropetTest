@@ -12,15 +12,12 @@ import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
         // Configure
         FirebaseApp.configure()
         IQKeyboardManager.shared.enable = true
-        
         // Root Controller
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
@@ -30,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController =  UINavigationController(rootViewController: loginModule)
         return true
     }
-    
     func setupNavBar() {
            // Nav-Bar
            UINavigationBar.appearance().barTintColor = UIColor.white

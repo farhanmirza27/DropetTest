@@ -40,7 +40,7 @@ class FirebaseClient : FirebaseClientProtocol {
     }
     // verify phone number
     func verifyPhoneNumber(number: String, responseHandler: @escaping ResponseHandler<String>, _ errorHandler: @escaping ErrorHandler) {
-        PhoneAuthProvider.provider().verifyPhoneNumber("+44" + number, uiDelegate: nil) { (verificationID, error) in
+        PhoneAuthProvider.provider().verifyPhoneNumber(number, uiDelegate: nil) { (verificationID, error) in
             if let error = error {
                 errorHandler(error)
             }
@@ -122,7 +122,7 @@ class FirebaseClient : FirebaseClientProtocol {
             }
         }
     }
-    
+    // logout
     func logout(responseHandler: @escaping ResponseHandler<Bool>) {
         do {
             try Auth.auth().signOut()
@@ -133,7 +133,6 @@ class FirebaseClient : FirebaseClientProtocol {
     }
     
 }
-
 
 // DataError
 enum DataError : Error {

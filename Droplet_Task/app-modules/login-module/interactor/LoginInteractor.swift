@@ -24,6 +24,11 @@ class LoginInteractor : PresenterToInteractorLoginProtocol {
     }
     // verify phone numnber
     func verifyNumber(number: String) {
+        // internet connectivity
+        guard NetworkManager.shared.connectedToNetwork() else {
+            presenter?.fail(error: "you are not connected to internet")
+            return
+        }
         firebaseClient?.verifyPhoneNumber(number: number, responseHandler: { verificationID in
             // save verification id
             UserDefaults.standard.set(verificationID, forKey: "verficationID")
@@ -37,6 +42,11 @@ class LoginInteractor : PresenterToInteractorLoginProtocol {
     }
     // perform login with code
     func login(code: String) {
+        // internet connectivity
+            guard NetworkManager.shared.connectedToNetwork() else {
+                presenter?.fail(error: "you are not connected to internet")
+                return
+            }
         if let verificationID = UserDefaults.standard.value(forKey: "verficationID") {
             firebaseClient?.signIn(verificationID: "\(verificationID)", code: code, responseHandler: { result in
                 // sucess
