@@ -151,6 +151,7 @@ extension ProfileViewController : UITableViewDelegate , UITableViewDataSource {
     
     // handle save button click
     @objc func didClickSave() {
+        self.dismissKeyboard()
         guard validateData().0 else {
             self.alert(message: validateData().1)
             return

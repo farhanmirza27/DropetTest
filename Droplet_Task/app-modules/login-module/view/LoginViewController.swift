@@ -31,6 +31,7 @@ class LoginViewController: BaseViewController {
     }
     // setup sub-views and configurations
     func setupView() {
+        navigationItem.title = "Login"
         codeTF.isHidden = true
         countryCodeTF.text = "+44"
         countryCodeTF.isEnabled = false
@@ -43,8 +44,8 @@ class LoginViewController: BaseViewController {
         
         resendContainer.addSubViews(views: resendBtn,timerLabel)
         resendContainer.addConstraintsWithFormat("H:|-16-[v0]-16-[v1]-16-|", views: resendBtn,timerLabel)
-        resendContainer.addConstraintsWithFormat("V:|[v0(35)]|", views: resendBtn,resendBtn)
-        resendContainer.addConstraintsWithFormat("V:|[v0]|", views: resendBtn,timerLabel)
+        resendContainer.addConstraintsWithFormat("V:|[v0(35)]|", views: resendBtn)
+        resendContainer.addConstraintsWithFormat("V:|-8-[v0]", views:  timerLabel)
         
         saveAreaView.addSubViews(views: fieldsContainer,codeTF,proceedBtn,resendContainer)
         saveAreaView.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: fieldsContainer)
@@ -60,10 +61,10 @@ class LoginViewController: BaseViewController {
     // handle button click for phone verfication and login
     @objc func didClickLoginBtn(sender : UIButton) {
         self.dismissKeyboard()
-        showSpinner()
         if sender.tag == 0 {
             if let text = phoneNumTF.text {
                 if !text.isEmpty {
+                    showSpinner()
                     // verify phone number
                     presenter?.verifyNumber(number:  countryCodeTF.text! + text)
                 }
@@ -72,6 +73,7 @@ class LoginViewController: BaseViewController {
             if let code = codeTF.text {
                 if !code.isEmpty {
                     // perform login
+                    showSpinner()
                     self.presenter?.login(code: code)
                 }
                 else {
@@ -85,7 +87,7 @@ class LoginViewController: BaseViewController {
         // can be used last recieved verification id but if user change phone number then its better
         if let text = phoneNumTF.text {
             if !text.isEmpty {
-                presenter?.verifyNumber(number: text)
+                presenter?.verifyNumber(number: countryCodeTF.text! + text)
             }
             else {
                 self.alert(message: "please provide phone number")
@@ -97,14 +99,17 @@ class LoginViewController: BaseViewController {
     func runTimer() {
         resendBtn.isEnabled = false
         resendBtn.setTitleColor(.gray, for: .normal)
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
     }
     // update seconds on screen
     @objc func updateCounter() {
         seconds  -= 1
+        timerLabel.text = "in \(seconds)"
         if seconds == 0 {
             resendBtn.isEnabled = true
             resendBtn.setTitleColor(.blue, for: .normal)
+            timerLabel.text = ""
+            seconds = 60
             timer?.invalidate()
         }
     }
@@ -132,6 +137,9 @@ extension LoginViewController : PresenterToViewLoginProtocol {
             self?.codeTF.text = nil
             self?.codeTF.isHidden = true
             self?.resendBtn.isHidden = true
+            self?.timer?.invalidate()
+            self?.seconds = 60
+            self?.timerLabel.text = ""
             self?.presenter?.showProfile(from: self!)
         }
     }

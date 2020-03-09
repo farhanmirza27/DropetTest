@@ -12,6 +12,11 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 
+private enum FirebaseDocRefs : String {
+    case users
+}
+
+
 typealias ResponseHandler<T> = (T) -> Void
 typealias ErrorHandler = (Error) -> Void
 
@@ -24,6 +29,7 @@ protocol FirebaseClientProtocol : class {
     func updateProfile(profile : Profile,responseHandler:@escaping ResponseHandler<Bool>,_ errorHandler:@escaping ErrorHandler)
     func retriveUserInfo(responseHandler:@escaping ResponseHandler<Profile>,_ errorHandler:@escaping ErrorHandler)
     func logout(responseHandler:@escaping ResponseHandler<Bool>)
+    
 }
 
 // FirebaseClient handles all firebase requests
@@ -73,7 +79,7 @@ class FirebaseClient : FirebaseClientProtocol {
     func saveProfileInfo(uid : String) {
         let user = Profile(firstName: "", lastName: "", phone: "", email: "", location: "", profilePicture: "")
         do {
-            try db.collection("users").document(uid).setData(from: user)
+            try db.collection(FirebaseDocRefs.users.rawValue).document(uid).setData(from: user)
         } catch let error {
             print("Error writing user to Firestore: \(error)")
             return
@@ -83,7 +89,7 @@ class FirebaseClient : FirebaseClientProtocol {
     // get user profile information for logged in user
     func retriveUserInfo(responseHandler: @escaping ResponseHandler<Profile>, _ errorHandler: @escaping ErrorHandler) {
         if let currentUser = Auth.auth().currentUser {
-            let docRef = db.collection("users").document(currentUser.uid)
+            let docRef = db.collection(FirebaseDocRefs.users.rawValue).document(currentUser.uid)
             docRef.getDocument { (document, error) in
                 let result = Result {
                     try document.flatMap {
@@ -108,7 +114,7 @@ class FirebaseClient : FirebaseClientProtocol {
     func updateProfile(profile: Profile, responseHandler: @escaping ResponseHandler<Bool>, _ errorHandler: @escaping ErrorHandler) {
         
         if let currentUser = Auth.auth().currentUser {
-            let userRef = db.collection("users").document(currentUser.uid)
+            let userRef = db.collection(FirebaseDocRefs.users.rawValue).document(currentUser.uid)
             
             // Set the "capital" field of the city 'DC'
             let test = try! Firestore.Encoder().encode(profile)
